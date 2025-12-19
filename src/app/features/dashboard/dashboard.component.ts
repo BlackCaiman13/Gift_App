@@ -19,9 +19,17 @@ import { DialogComponent } from '../../shared/components/dialog.component';
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50" @fadeIn>
       <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex justify-between h-16 items-center">
-            <h1 class="text-2xl font-bold text-purple-600">🎁 Tirage au Sort</h1>
-            <div class="flex gap-3">
+          <div class="flex justify-between h-20 items-center">
+            <div class="flex items-center gap-4">
+              <img src="assets/inphb.png" alt="INPHB" class="h-14 object-contain" />
+              <div class="border-l-2 border-gray-300 h-12"></div>
+              <div>
+                <img src="assets/mutuel.png" alt="Mutuel" class="h-14 object-contain" />
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              
+              <div class="flex gap-3">
               
               <button
                 (click)="resetAll()"
@@ -42,6 +50,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
               >
                 Déconnexion
               </button>
+              </div>
             </div>
           </div>
         </div>
@@ -60,47 +69,46 @@ import { DialogComponent } from '../../shared/components/dialog.component';
             <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition" @scaleIn>
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-gray-500 text-sm font-medium">Participants</p>
+                  <p class="text-gray-500 text-sm font-medium">Hommes</p>
                   <p class="text-4xl font-bold text-blue-600 mt-2">{{ status()?.status?.participants?.total || 0 }}</p>
                 </div>
                 <div class="bg-blue-100 rounded-full p-4">
-                  <span class="text-4xl">👥</span>
+                  <span class="text-4xl">👨</span>
                 </div>
               </div>
               <div class="mt-4 flex justify-between text-sm">
-                <span class="text-green-600">✓ Associés: {{ status()?.status?.participants?.associated || 0 }}</span>
-                <span class="text-orange-600">⊗ Restants: {{ status()?.status?.participants?.unassociated || 0 }}</span>
+                <span class="text-green-600">✓ En couple: {{ getParticipantsAssociated() }}</span>
+                
               </div>
             </div>
 
             <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition" @scaleIn>
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-gray-500 text-sm font-medium">Cadeaux</p>
+                  <p class="text-gray-500 text-sm font-medium">Femmes</p>
                   <p class="text-4xl font-bold text-pink-600 mt-2">{{ status()?.status?.gifts?.total || 0 }}</p>
                 </div>
                 <div class="bg-pink-100 rounded-full p-4">
-                  <span class="text-4xl">🎁</span>
+                  <span class="text-4xl">👩</span>
                 </div>
               </div>
               <div class="mt-4 flex justify-between text-sm">
-                <span class="text-green-600">✓ Associés: {{ status()?.status?.gifts?.associated || 0 }}</span>
-                <span class="text-orange-600">⊗ Restants: {{ status()?.status?.gifts?.unassociated || 0 }}</span>
+                <span class="text-green-600">✓ En couple: {{ getGiftsAssociated() }}</span>
               </div>
             </div>
 
             <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition" @scaleIn>
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-gray-500 text-sm font-medium">Associations</p>
-                  <p class="text-4xl font-bold text-purple-600 mt-2">{{ status()?.status?.associations?.total || 0 }}</p>
+                  <p class="text-gray-500 text-sm font-medium">Couples formés</p>
+                  <p class="text-4xl font-bold text-indigo-600 mt-2">{{ status()?.status?.associations?.total || 0 }}</p>
                 </div>
-                <div class="bg-purple-100 rounded-full p-4">
-                  <span class="text-4xl">🎉</span>
+                <div class="bg-indigo-100 rounded-full p-4">
+                  <span class="text-4xl">💑</span>
                 </div>
               </div>
               <div class="mt-4 text-sm text-gray-600">
-                Paires créées avec succès
+                Rencontres réussies
               </div>
             </div>
           </div>
@@ -108,37 +116,37 @@ import { DialogComponent } from '../../shared/components/dialog.component';
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <a
               routerLink="/participants"
-              class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl p-6 hover:from-blue-600 hover:to-blue-700 transition transform hover:scale-105 shadow-lg"
+              class="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-xl p-6 hover:from-blue-700 hover:to-blue-800 transition transform hover:scale-105 shadow-lg"
             >
-              <div class="text-4xl mb-3">👥</div>
-              <h3 class="text-xl font-bold">Participants</h3>
-              <p class="text-sm opacity-90 mt-1">Gérer les participants</p>
+              <div class="text-4xl mb-3">👨</div>
+              <h3 class="text-xl font-bold">Hommes</h3>
+              <p class="text-sm opacity-90 mt-1">Gérer les hommes</p>
             </a>
 
             <a
               routerLink="/gifts"
               class="bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-xl p-6 hover:from-pink-600 hover:to-pink-700 transition transform hover:scale-105 shadow-lg"
             >
-              <div class="text-4xl mb-3">🎁</div>
-              <h3 class="text-xl font-bold">Cadeaux</h3>
-              <p class="text-sm opacity-90 mt-1">Gérer les cadeaux</p>
+              <div class="text-4xl mb-3">👩</div>
+              <h3 class="text-xl font-bold">Femmes</h3>
+              <p class="text-sm opacity-90 mt-1">Gérer les femmes</p>
             </a>
 
             <a
               routerLink="/draw"
-              class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 hover:from-purple-600 hover:to-purple-700 transition transform hover:scale-105 shadow-lg"
+              class="bg-gradient-to-br from-indigo-600 to-indigo-700 text-white rounded-xl p-6 hover:from-indigo-700 hover:to-indigo-800 transition transform hover:scale-105 shadow-lg"
             >
-              <div class="text-4xl mb-3">🎲</div>
-              <h3 class="text-xl font-bold">Tirage au Sort</h3>
-              <p class="text-sm opacity-90 mt-1">Lancer le tirage</p>
+              <div class="text-4xl mb-3">💘</div>
+              <h3 class="text-xl font-bold">Jeu de l'Invisible</h3>
+              <p class="text-sm opacity-90 mt-1">Lancer le jeu</p>
             </a>
 
             <a
               routerLink="/results"
-              class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl p-6 hover:from-green-600 hover:to-green-700 transition transform hover:scale-105 shadow-lg"
+              class="bg-gradient-to-br from-green-600 to-green-700 text-white rounded-xl p-6 hover:from-green-700 hover:to-green-800 transition transform hover:scale-105 shadow-lg"
             >
               <div class="text-4xl mb-3">📊</div>
-              <h3 class="text-xl font-bold">Résultats</h3>
+              <h3 class="text-xl font-bold">Couples</h3>
               <p class="text-sm opacity-90 mt-1">Voir et exporter</p>
             </a>
           </div>
@@ -160,6 +168,29 @@ export class DashboardComponent implements OnInit {
     private dialogService: DialogService
   ) {}
 
+  // Calculer le nombre de participants associés
+  getParticipantsAssociated(): number {
+    const associations = this.status()?.status?.associations?.details || [];
+    const uniqueParticipants = new Set<string>();
+    associations.forEach(assoc => {
+      uniqueParticipants.add(assoc.personne1);
+    });
+    return uniqueParticipants.size;
+  }
+
+
+  // Calculer le nombre de cadeaux (femmes) associés
+  getGiftsAssociated(): number {
+    const associations = this.status()?.status?.associations?.details || [];
+    const uniqueGifts = new Set<string>();
+    associations.forEach(assoc => {
+      uniqueGifts.add(assoc.personne2);
+    });
+    return uniqueGifts.size;
+  }
+
+
+
   ngOnInit() {
     this.loadStatus();
   }
@@ -179,8 +210,8 @@ export class DashboardComponent implements OnInit {
 
   async resetAssociations() {
     const confirmed = await this.dialogService.confirm({
-      title: 'Réinitialiser les associations',
-      message: 'Voulez-vous vraiment réinitialiser toutes les associations ?\n\nCette action :\n• Supprimera toutes les associations participant-cadeau\n• Conservera les participants et les cadeaux\n• Permettra de refaire un nouveau tirage\n\nCette action est irréversible.',
+      title: 'Réinitialiser les couples',
+      message: 'Voulez-vous vraiment réinitialiser tous les couples ?\n\nCette action :\n• Supprimera tous les couples formés\n• Conservera les hommes et les femmes\n• Permettra de refaire un nouveau jeu\n\nCette action est irréversible.',
       confirmText: 'Oui, réinitialiser',
       cancelText: 'Annuler',
       type: 'warning'
@@ -192,8 +223,8 @@ export class DashboardComponent implements OnInit {
     this.associationService.resetAssociations().subscribe({
       next: async (response) => {
         await this.dialogService.alert(
-          'Associations réinitialisées',
-          `Toutes les associations ont été supprimées.\n\n${response.associations_deleted} association(s) supprimée(s).\n\nVous pouvez maintenant effectuer un nouveau tirage.`,
+          'Couples réinitialisés',
+          `Tous les couples ont été supprimés.\n\n${response.associations_deleted} couple(s) supprimé(s).\n\nVous pouvez maintenant effectuer un nouveau jeu.`,
           'success'
         );
         this.resettingAssociations.set(false);
@@ -202,7 +233,7 @@ export class DashboardComponent implements OnInit {
       error: async (error) => {
         await this.dialogService.alert(
           'Erreur',
-          'Erreur lors de la réinitialisation des associations: ' + (error.error?.message || 'Une erreur est survenue'),
+          'Erreur lors de la réinitialisation des couples: ' + (error.error?.message || 'Une erreur est survenue'),
           'error'
         );
         this.resettingAssociations.set(false);
@@ -213,7 +244,7 @@ export class DashboardComponent implements OnInit {
   async resetAll() {
     const confirmed = await this.dialogService.confirm({
       title: 'Confirmer la réinitialisation totale',
-      message: 'Êtes-vous sûr de vouloir réinitialiser toutes les données ?\n\nCette action supprimera :\n• Tous les participants\n• Tous les cadeaux\n• Toutes les associations\n\nCette action est irréversible.',
+      message: 'Êtes-vous sûr de vouloir réinitialiser toutes les données ?\n\nCette action supprimera :\n• Tous les hommes\n• Toutes les femmes\n• Tous les couples\n\nCette action est irréversible.',
       confirmText: 'Oui, réinitialiser tout',
       cancelText: 'Annuler',
       type: 'warning'
@@ -226,7 +257,7 @@ export class DashboardComponent implements OnInit {
       next: async (response) => {
         await this.dialogService.alert(
           'Réinitialisation totale réussie',
-          `Toutes les données ont été réinitialisées.\n\nDonnées précédentes :\n• Participants : ${response.previous_data.names}\n• Cadeaux : ${response.previous_data.numbers}\n• Associations : ${response.previous_data.associations}`,
+          `Toutes les données ont été réinitialisées.\n\nDonnées précédentes :\n• Hommes : ${response.previous_data.names}\n• Femmes : ${response.previous_data.numbers}\n• Couples : ${response.previous_data.associations}`,
           'success'
         );
         this.resetting.set(false);

@@ -32,14 +32,12 @@ export class AssociationService {
   getAssociations(): Observable<{
     success: boolean;
     total: number;
-    associations: { [key: string]: number };
-    associations_list: Association[];
+    associations: Association[];
   }> {
     return this.http.get<{
       success: boolean;
       total: number;
-      associations: { [key: string]: number };
-      associations_list: Association[];
+      associations: Association[];
     }>(`${this.API_URL}/associations`);
   }
 

@@ -11,11 +11,15 @@ import { fadeIn, slideIn } from '../../shared/animations/animations';
   imports: [CommonModule, ReactiveFormsModule],
   animations: [fadeIn, slideIn],
   template: `
-    <div class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4" @fadeIn>
+    <div class="min-h-screen bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-800 flex items-center justify-center p-4" @fadeIn>
       <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8" @slideIn>
         <div class="text-center mb-8">
-          <h1 class="text-4xl font-bold text-gray-800 mb-2">🎁 Tirage au Sort</h1>
+          <div class="flex justify-center items-center gap-4 mb-4">
+            <img src="assets/mutuel.png" alt="Mutuel" class="h-16 object-contain" />
+          </div>
+          <h1 class="text-4xl font-bold text-blue-900 mb-2">Jeu de l'Invisible</h1>
           <p class="text-gray-600">Connectez-vous pour accéder à l'application</p>
+          <p class="text-xs text-gray-500 mt-1">INPHB - Institut National Polytechnique Houphouët-Boigny</p>
         </div>
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
@@ -58,7 +62,7 @@ import { fadeIn, slideIn } from '../../shared/animations/animations';
           <button
             type="submit"
             [disabled]="loading() || loginForm.invalid"
-            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            class="w-full bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-3 rounded-lg font-semibold hover:from-blue-800 hover:to-indigo-800 transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             @if (loading()) {
               <span class="inline-block animate-spin mr-2">⏳</span>

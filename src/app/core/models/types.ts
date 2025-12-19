@@ -19,8 +19,12 @@ export interface LoginResponse {
 // pas d'objets complexes
 
 export interface Association {
-  participant: string;
-  gift: number;
+  type: string;
+  personne1: string;
+  personne2: string;
+  is_archived: boolean;
+  created_at: string | null;
+  updated_at: string | null;
 }
 
 export interface StatusResponse {
@@ -29,21 +33,18 @@ export interface StatusResponse {
   status: {
     participants: {
       total: number;
-      associated: number;
-      unassociated: number;
-      list_associated: string[];
-      list_unassociated: string[];
+      list: string[];
     };
     gifts: {
       total: number;
-      associated: number;
-      unassociated: number;
-      list_associated: number[];
-      list_unassociated: number[];
+      list: string[];
     };
     associations: {
       total: number;
-      details: { [key: string]: number };
+      'H-F': number;
+      'H-H': number;
+      'F-F': number;
+      details: Association[];
     };
   };
 }

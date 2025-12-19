@@ -15,14 +15,24 @@ import { DialogComponent } from '../../shared/components/dialog.component';
   template: `
     <app-dialog></app-dialog>
 
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50" @fadeIn>
+    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50" @fadeIn>
       <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex justify-between h-16 items-center">
-            <h1 class="text-2xl font-bold text-purple-600">👥 Participants</h1>
-            <a routerLink="/dashboard" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
-              ← Retour
-            </a>
+          <div class="flex justify-between h-20 items-center">
+            <div class="flex items-center gap-4">
+              <img src="assets/inphb.png" alt="INPHB" class="h-14 object-contain" />
+              <div class="border-l-2 border-gray-300 h-12"></div>
+              <div>
+                
+              <img src="assets/mutuel.png" alt="Mutuel" class="h-14 object-contain" />
+                <p class="text-xs text-gray-600">Gestion des participants masculins</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <a routerLink="/dashboard" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
+                ← Retour
+              </a>
+            </div>
           </div>
         </div>
       </nav>
@@ -30,11 +40,11 @@ import { DialogComponent } from '../../shared/components/dialog.component';
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div class="bg-white rounded-xl shadow-lg p-6" @scaleIn>
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Ajouter un participant</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Ajouter un homme</h2>
 
             <div class="space-y-4">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Nom du participant</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Nom de l'homme</label>
                 <div class="flex gap-2">
                   <input
                     [(ngModel)]="newParticipant"
@@ -82,7 +92,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
 
           <div class="bg-white rounded-xl shadow-lg p-6" @scaleIn>
             <h2 class="text-2xl font-bold text-gray-800 mb-6">
-              Liste des participants ({{ participants().length }})
+              Liste des hommes ({{ participants().length }})
             </h2>
 
             @if (loading()) {
@@ -93,7 +103,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
             } @else if (participants().length === 0) {
               <div class="text-center py-8 text-gray-500">
                 <p class="text-4xl mb-2">📭</p>
-                <p>Aucun participant pour le moment</p>
+                <p>Aucun homme pour le moment</p>
               </div>
             } @else {
               <div class="space-y-2 max-h-96 overflow-y-auto">
@@ -180,7 +190,7 @@ export class ParticipantsComponent implements OnInit {
   async deleteParticipant(nom: string) {
     const confirmed = await this.dialogService.confirm({
       title: 'Confirmer la suppression',
-      message: `Voulez-vous vraiment supprimer le participant "${nom}" ?`,
+      message: `Voulez-vous vraiment supprimer l'homme "${nom}" ?`,
       confirmText: 'Supprimer',
       cancelText: 'Annuler',
       type: 'warning'

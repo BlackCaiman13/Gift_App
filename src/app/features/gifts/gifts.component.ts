@@ -18,11 +18,21 @@ import { DialogComponent } from '../../shared/components/dialog.component';
     <div class="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50" @fadeIn>
       <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex justify-between h-16 items-center">
-            <h1 class="text-2xl font-bold text-purple-600">🎁 Cadeaux</h1>
-            <a routerLink="/dashboard" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
-              ← Retour
-            </a>
+          <div class="flex justify-between h-20 items-center">
+            <div class="flex items-center gap-4">
+              <img src="assets/inphb.png" alt="INPHB" class="h-14 object-contain" />
+              <div class="border-l-2 border-gray-300 h-12"></div>
+              <div>
+                
+              <img src="assets/mutuel.png" alt="Mutuel" class="h-14 object-contain" />
+                <p class="text-xs text-gray-600">Gestion des participantes féminines</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <a routerLink="/dashboard" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
+                ← Retour
+              </a>
+            </div>
           </div>
         </div>
       </nav>
@@ -30,18 +40,18 @@ import { DialogComponent } from '../../shared/components/dialog.component';
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div class="bg-white rounded-xl shadow-lg p-6" @scaleIn>
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Ajouter un cadeau</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Ajouter une femme</h2>
 
             <div class="space-y-4">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Nom du cadeau</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Nom de la femme</label>
                 <div class="flex gap-2">
                   <input
                     [(ngModel)]="newGift"
                     (keyup.enter)="addGift()"
                     type="text"
                     class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                    placeholder="Ex: PlayStation 5"
+                    placeholder="Ex: Marie Dupont"
                   />
                   <button
                     (click)="addGift()"
@@ -63,7 +73,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
                   [(ngModel)]="bulkGifts"
                   rows="5"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                  placeholder="PlayStation 5&#10;Nintendo Switch&#10;Airpods Pro"
+                  placeholder="Marie Dupont&#10;Sophie Martin&#10;Julie Durand"
                 ></textarea>
                 <button
                   (click)="addGiftsBulk()"
@@ -82,7 +92,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
 
           <div class="bg-white rounded-xl shadow-lg p-6" @scaleIn>
             <h2 class="text-2xl font-bold text-gray-800 mb-6">
-              Liste des cadeaux ({{ gifts().length }})
+              Liste des femmes ({{ gifts().length }})
             </h2>
 
             @if (loading()) {
@@ -93,7 +103,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
             } @else if (gifts().length === 0) {
               <div class="text-center py-8 text-gray-500">
                 <p class="text-4xl mb-2">📭</p>
-                <p>Aucun cadeau pour le moment</p>
+                <p>Aucune femme pour le moment</p>
               </div>
             } @else {
               <div class="space-y-2 max-h-96 overflow-y-auto">
@@ -117,7 +127,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
   `,
 })
 export class GiftsComponent implements OnInit {
-  gifts = signal<number[]>([]);
+  gifts = signal<string[]>([]);
   loading = signal(true);
   addingOne = signal(false);
   addingBulk = signal(false);
@@ -147,18 +157,8 @@ export class GiftsComponent implements OnInit {
   async addGift() {
     if (!this.newGift.trim()) return;
 
-    const giftNumber = parseInt(this.newGift.trim(), 10);
-    if (isNaN(giftNumber)) {
-      await this.dialogService.alert(
-        'Nombre invalide',
-        'Veuillez entrer un nombre valide pour le cadeau.',
-        'warning'
-      );
-      return;
-    }
-
     this.addingOne.set(true);
-    this.giftService.addGift(giftNumber).subscribe({
+    this.giftService.addGift(this.newGift.trim()).subscribe({
       next: () => {
         this.newGift = '';
         this.loadGifts();
@@ -169,15 +169,15 @@ export class GiftsComponent implements OnInit {
   }
 
   addGiftsBulk() {
-    const numbers = this.bulkGifts
+    const names = this.bulkGifts
       .split('\n')
-      .map(n => parseInt(n.trim(), 10))
-      .filter(n => !isNaN(n));
+      .map(n => n.trim())
+      .filter(n => n.length > 0);
 
-    if (numbers.length === 0) return;
+    if (names.length === 0) return;
 
     this.addingBulk.set(true);
-    this.giftService.addGiftsBulk(numbers).subscribe({
+    this.giftService.addGiftsBulk(names).subscribe({
       next: () => {
         this.bulkGifts = '';
         this.loadGifts();
@@ -187,10 +187,10 @@ export class GiftsComponent implements OnInit {
     });
   }
 
-  async deleteGift(gift: number) {
+  async deleteGift(gift: string) {
     const confirmed = await this.dialogService.confirm({
       title: 'Confirmer la suppression',
-      message: `Voulez-vous vraiment supprimer le cadeau n°${gift} ?`,
+      message: `Voulez-vous vraiment supprimer la femme "${gift}" ?`,
       confirmText: 'Supprimer',
       cancelText: 'Annuler',
       type: 'warning'

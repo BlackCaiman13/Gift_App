@@ -14,11 +14,21 @@ import { fadeIn, scaleIn } from '../../shared/animations/animations';
     <div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-50" @fadeIn>
       <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex justify-between h-16 items-center">
-            <h1 class="text-2xl font-bold text-purple-600">📊 Résultats</h1>
-            <a routerLink="/dashboard" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
-              ← Retour
-            </a>
+          <div class="flex justify-between h-20 items-center">
+            <div class="flex items-center gap-4">
+              <img src="assets/inphb.png" alt="INPHB" class="h-14 object-contain" />
+              <div class="border-l-2 border-gray-300 h-12"></div>
+              <div>
+                
+              <img src="assets/mutuel.png" alt="Mutuel" class="h-14 object-contain" />
+                <p class="text-xs text-gray-600">Résultats des associations</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <a routerLink="/dashboard" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
+                ← Retour
+              </a>
+            </div>
           </div>
         </div>
       </nav>
@@ -27,7 +37,7 @@ import { fadeIn, scaleIn } from '../../shared/animations/animations';
         <div class="bg-white rounded-xl shadow-lg p-6" @scaleIn>
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">
-              Associations finales ({{ associations().length }})
+              Couples formés ({{ associations().length }})
             </h2>
             <div class="flex gap-3">
               <button
@@ -65,13 +75,13 @@ import { fadeIn, scaleIn } from '../../shared/animations/animations';
           } @else if (associations().length === 0) {
             <div class="text-center py-12">
               <div class="text-6xl mb-4">📭</div>
-              <p class="text-xl text-gray-600 mb-4">Aucune association pour le moment</p>
-              <p class="text-gray-500">Lancez un tirage au sort pour voir les résultats</p>
+              <p class="text-xl text-gray-600 mb-4">Aucun couple formé pour le moment</p>
+              <p class="text-gray-500">Lancez le jeu de l'invisible pour former des couples</p>
               <a
                 routerLink="/draw"
                 class="inline-block mt-6 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
               >
-                🎲 Lancer un tirage
+                💘 Lancer le jeu
               </a>
             </div>
           } @else {
@@ -80,8 +90,8 @@ import { fadeIn, scaleIn } from '../../shared/animations/animations';
                 <thead>
                   <tr class="border-b-2 border-gray-200">
                     <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">#</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Participant</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Cadeau</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Homme</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Femme</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -90,14 +100,14 @@ import { fadeIn, scaleIn } from '../../shared/animations/animations';
                       <td class="px-6 py-4 text-gray-600">{{ $index + 1 }}</td>
                       <td class="px-6 py-4">
                         <div class="flex items-center gap-2">
-                          <span class="text-2xl">👤</span>
-                          <span class="font-medium text-gray-800">{{ association.participant }}</span>
+                          <span class="text-2xl">👨</span>
+                          <span class="font-medium text-gray-800">{{ association.personne1 }}</span>
                         </div>
                       </td>
                       <td class="px-6 py-4">
                         <div class="flex items-center gap-2">
-                          <span class="text-2xl">🎁</span>
-                          <span class="font-medium text-gray-800">{{ association.gift }}</span>
+                          <span class="text-2xl">👩</span>
+                          <span class="font-medium text-gray-800">{{ association.personne2 }}</span>
                         </div>
                       </td>
                     </tr>
@@ -127,7 +137,7 @@ export class ResultsComponent implements OnInit {
     this.loading.set(true);
     this.associationService.getAssociations().subscribe({
       next: (data) => {
-        this.associations.set(data.associations_list || []);
+        this.associations.set(data.associations || []);
         this.loading.set(false);
       },
       error: () => this.loading.set(false)
@@ -138,7 +148,7 @@ export class ResultsComponent implements OnInit {
     this.exportingCSV.set(true);
     this.associationService.exportCSV().subscribe({
       next: (blob) => {
-        this.downloadFile(blob, `tirage_${this.getTimestamp()}.csv`);
+        this.downloadFile(blob, `couples_${this.getTimestamp()}.csv`);
         this.exportingCSV.set(false);
       },
       error: () => {
@@ -152,7 +162,7 @@ export class ResultsComponent implements OnInit {
     this.exportingPDF.set(true);
     this.associationService.exportPDF().subscribe({
       next: (blob) => {
-        this.downloadFile(blob, `tirage_${this.getTimestamp()}.pdf`);
+        this.downloadFile(blob, `couples_${this.getTimestamp()}.pdf`);
         this.exportingPDF.set(false);
       },
       error: () => {
