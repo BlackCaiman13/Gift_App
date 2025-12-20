@@ -73,11 +73,11 @@ import { DialogComponent } from '../../shared/components/dialog.component';
                   <p class="text-4xl font-bold text-blue-600 mt-2">{{ status()?.status?.participants?.total || 0 }}</p>
                 </div>
                 <div class="bg-blue-100 rounded-full p-4">
-                  <span class="text-4xl">👨</span>
+                  <span class="text-4xl">🧑🏾‍🏫</span>
                 </div>
               </div>
               <div class="mt-4 flex justify-between text-sm">
-                <span class="text-green-600">✓ En couple: {{ getParticipantsAssociated() }}</span>
+                <span class="text-green-600">✓ En binôme: {{ getParticipantsAssociated() }}</span>
                 
               </div>
             </div>
@@ -89,27 +89,25 @@ import { DialogComponent } from '../../shared/components/dialog.component';
                   <p class="text-4xl font-bold text-pink-600 mt-2">{{ status()?.status?.gifts?.total || 0 }}</p>
                 </div>
                 <div class="bg-pink-100 rounded-full p-4">
-                  <span class="text-4xl">👩</span>
+                  <span class="text-4xl">👩🏾‍🏫</span>
                 </div>
               </div>
               <div class="mt-4 flex justify-between text-sm">
-                <span class="text-green-600">✓ En couple: {{ getGiftsAssociated() }}</span>
+                <span class="text-green-600">✓ En binôme: {{ getGiftsAssociated() }}</span>
               </div>
             </div>
 
             <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition" @scaleIn>
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-gray-500 text-sm font-medium">Couples formés</p>
+                  <p class="text-gray-500 text-sm font-medium">Binômes formés</p>
                   <p class="text-4xl font-bold text-indigo-600 mt-2">{{ status()?.status?.associations?.total || 0 }}</p>
                 </div>
                 <div class="bg-indigo-100 rounded-full p-4">
-                  <span class="text-4xl">💑</span>
+                  <span class="text-4xl">🫱🏾‍🫲🏾</span>
                 </div>
               </div>
-              <div class="mt-4 text-sm text-gray-600">
-                Rencontres réussies
-              </div>
+             
             </div>
           </div>
 
@@ -118,7 +116,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
               routerLink="/participants"
               class="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-xl p-6 hover:from-blue-700 hover:to-blue-800 transition transform hover:scale-105 shadow-lg"
             >
-              <div class="text-4xl mb-3">👨</div>
+              <div class="text-4xl mb-3">🧑🏾‍🏫</div>
               <h3 class="text-xl font-bold">Hommes</h3>
               <p class="text-sm opacity-90 mt-1">Gérer les hommes</p>
             </a>
@@ -127,7 +125,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
               routerLink="/gifts"
               class="bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-xl p-6 hover:from-pink-600 hover:to-pink-700 transition transform hover:scale-105 shadow-lg"
             >
-              <div class="text-4xl mb-3">👩</div>
+              <div class="text-4xl mb-3">👩🏾‍🏫</div>
               <h3 class="text-xl font-bold">Femmes</h3>
               <p class="text-sm opacity-90 mt-1">Gérer les femmes</p>
             </a>
@@ -136,7 +134,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
               routerLink="/draw"
               class="bg-gradient-to-br from-indigo-600 to-indigo-700 text-white rounded-xl p-6 hover:from-indigo-700 hover:to-indigo-800 transition transform hover:scale-105 shadow-lg"
             >
-              <div class="text-4xl mb-3">💘</div>
+              <div class="text-4xl mb-3">🎲</div>
               <h3 class="text-xl font-bold">Jeu de l'Invisible</h3>
               <p class="text-sm opacity-90 mt-1">Lancer le jeu</p>
             </a>
@@ -146,7 +144,7 @@ import { DialogComponent } from '../../shared/components/dialog.component';
               class="bg-gradient-to-br from-green-600 to-green-700 text-white rounded-xl p-6 hover:from-green-700 hover:to-green-800 transition transform hover:scale-105 shadow-lg"
             >
               <div class="text-4xl mb-3">📊</div>
-              <h3 class="text-xl font-bold">Couples</h3>
+              <h3 class="text-xl font-bold">Binômes</h3>
               <p class="text-sm opacity-90 mt-1">Voir et exporter</p>
             </a>
           </div>

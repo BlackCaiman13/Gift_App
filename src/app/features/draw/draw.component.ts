@@ -41,19 +41,19 @@ import { DialogComponent } from '../../shared/components/dialog.component';
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         @if (!drawStarted()) {
           <div class="text-center py-12" @fadeIn>
-            <div class="text-8xl mb-6">💑</div>
+            <div class="text-8xl mb-6">🎁</div>
             <h2 class="text-4xl font-bold text-gray-800 mb-4">Prêt pour le Jeu de l'Invisible ?</h2>
-            <p class="text-xl text-gray-600 mb-8">Cliquez sur le bouton pour former les couples</p>
+            <p class="text-xl text-gray-600 mb-8">Cliquez sur le bouton pour former les binômes d'échange de cadeaux</p>
 
             <button
               (click)="startDraw()"
               [disabled]="loading()"
-              class="px-12 py-4 bg-gradient-to-r from-blue-700 to-indigo-700 text-white text-xl font-bold rounded-xl hover:from-blue-800 hover:to-indigo-800 transition transform hover:scale-105 disabled:opacity-50 shadow-2xl"
+              class="px-12 py-4 bg-gradient-to-r from-green-600 to-red-600 text-white text-xl font-bold rounded-xl hover:from-green-700 hover:to-red-700 transition transform hover:scale-105 disabled:opacity-50 shadow-2xl"
             >
               @if (loading()) {
-                <span class="animate-spin mr-2">⏳</span> Formation des couples...
+                <span class="animate-spin mr-2">⏳</span> Formation des binômes...
               } @else {
-                💘 Lancer le jeu
+                🎄 Lancer le tirage
               }
             </button>
           </div>
@@ -61,20 +61,34 @@ import { DialogComponent } from '../../shared/components/dialog.component';
           <div class="space-y-6">
             <div class="text-center mb-8">
               <h2 class="text-3xl font-bold text-gray-800">
-                Couple {{ currentIndex() + 1 }} / {{ totalAssociations() }}
+                🎅 Binôme {{ currentIndex() + 1 }} / {{ totalAssociations() }} 🎄
               </h2>
             </div>
 
-            @if (currentAssociation()) {
+            @if (currentAssociation() && !isTransitioning()) {
               <div class="max-w-2xl mx-auto" @cardReveal>
-                <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl shadow-2xl p-8 text-white transform">
+                <div class="bg-gradient-to-br from-green-600 to-red-600 rounded-2xl shadow-2xl p-8 text-white transform">
                   <div class="text-center">
+                    <div class="text-5xl mb-4">🎅</div>
                     <h3 class="text-3xl font-bold mb-2">{{ currentAssociation()!.personne1 }}</h3>
-                    <div class="text-xl mb-4 opacity-90">Association</div>
+                    <div class="text-xl mb-4 opacity-90 flex items-center justify-center gap-2">
+                      <span>offre un cadeau à</span>
+                    </div>
                     <div class="bg-white/20 rounded-xl p-6 backdrop-blur-sm">
-                      <div class="text-5xl mb-2">👩</div>
+                      <div class="text-5xl mb-2">🎁</div>
                       <p class="text-2xl font-bold">{{ currentAssociation()!.personne2 }}</p>
                     </div>
+                  </div>
+                </div>
+              </div>
+            }
+            
+            @if (isTransitioning()) {
+              <div class="max-w-2xl mx-auto" @fadeIn>
+                <div class="bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl shadow-2xl p-12 text-white transform">
+                  <div class="text-center">
+                    <div class="text-8xl mb-4 animate-bounce">🎁</div>
+                    <p class="text-2xl font-bold animate-pulse">Prochain binôme...</p>
                   </div>
                 </div>
               </div>
@@ -83,38 +97,38 @@ import { DialogComponent } from '../../shared/components/dialog.component';
             <div class="flex gap-4 justify-center mt-8">
               <button
                 (click)="previousCouple()"
-                [disabled]="currentIndex() === 0"
+                [disabled]="currentIndex() === 0 || isTransitioning()"
                 class="px-8 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               >
-                ← Left
+                ← Précédent
               </button>
               <button
                 (click)="nextCouple()"
-                [disabled]="currentIndex() >= totalAssociations() - 1"
-                class="px-8 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                [disabled]="currentIndex() >= totalAssociations() - 1 || isTransitioning()"
+                class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               >
-                Right →
+                Suivant →
               </button>
             </div>
 
             @if (currentIndex() >= totalAssociations() - 1) {
               <div class="text-center mt-8" @fadeIn>
-                <div class="text-6xl mb-4">✨</div>
-                <h3 class="text-3xl font-bold text-gray-800 mb-4">Tous les couples ont été formés !</h3>
-                <p class="text-xl text-gray-600 mb-8">Tous les participants ont rencontré quelqu'un</p>
+                <div class="text-6xl mb-4">🎉</div>
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">Tous les binômes ont été formés !</h3>
+                <p class="text-xl text-gray-600 mb-8">Chacun sait à qui offrir son cadeau 🎁</p>
 
                 <div class="flex gap-4 justify-center">
                   <button
                     (click)="resetDraw()"
-                    class="px-8 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition transform hover:scale-105"
+                    class="px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition transform hover:scale-105"
                   >
-                    🔄 Nouveau jeu
+                    🔄 Nouveau tirage
                   </button>
                   <a
                     routerLink="/results"
                     class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition transform hover:scale-105"
                   >
-                    📊 Voir les couples
+                    📊 Voir les binômes
                   </a>
                 </div>
               </div>
@@ -134,6 +148,7 @@ export class DrawComponent implements OnInit {
   totalAssociations = signal(0);
   currentAssociation = signal<Association | null>(null);
   allAssociations: Association[] = [];
+  isTransitioning = signal(false);
 
   constructor(
     private associationService: AssociationService,
@@ -205,16 +220,32 @@ export class DrawComponent implements OnInit {
   }
 
   nextCouple() {
-    if (this.currentIndex() < this.totalAssociations() - 1) {
-      this.currentIndex.set(this.currentIndex() + 1);
-      this.showCurrentCouple();
+    if (this.currentIndex() < this.totalAssociations() - 1 && !this.isTransitioning()) {
+      this.isTransitioning.set(true);
+      this.currentAssociation.set(null);
+      
+      setTimeout(() => {
+        this.currentIndex.set(this.currentIndex() + 1);
+        setTimeout(() => {
+          this.isTransitioning.set(false);
+          this.showCurrentCouple();
+        }, 300);
+      }, 800);
     }
   }
 
   previousCouple() {
-    if (this.currentIndex() > 0) {
-      this.currentIndex.set(this.currentIndex() - 1);
-      this.showCurrentCouple();
+    if (this.currentIndex() > 0 && !this.isTransitioning()) {
+      this.isTransitioning.set(true);
+      this.currentAssociation.set(null);
+      
+      setTimeout(() => {
+        this.currentIndex.set(this.currentIndex() - 1);
+        setTimeout(() => {
+          this.isTransitioning.set(false);
+          this.showCurrentCouple();
+        }, 300);
+      }, 800);
     }
   }
 

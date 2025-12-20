@@ -37,7 +37,7 @@ import { fadeIn, scaleIn } from '../../shared/animations/animations';
         <div class="bg-white rounded-xl shadow-lg p-6" @scaleIn>
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">
-              Couples formés ({{ associations().length }})
+              Binômes formés ({{ associations().length }})
             </h2>
             <div class="flex gap-3">
               <button
@@ -81,7 +81,7 @@ import { fadeIn, scaleIn } from '../../shared/animations/animations';
                 routerLink="/draw"
                 class="inline-block mt-6 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
               >
-                💘 Lancer le jeu
+                🎲Lancer le jeu
               </a>
             </div>
           } @else {
@@ -100,13 +100,13 @@ import { fadeIn, scaleIn } from '../../shared/animations/animations';
                       <td class="px-6 py-4 text-gray-600">{{ $index + 1 }}</td>
                       <td class="px-6 py-4">
                         <div class="flex items-center gap-2">
-                          <span class="text-2xl">👨</span>
+                          <span class="text-2xl">🧑🏾‍🏫</span>
                           <span class="font-medium text-gray-800">{{ association.personne1 }}</span>
                         </div>
                       </td>
                       <td class="px-6 py-4">
                         <div class="flex items-center gap-2">
-                          <span class="text-2xl">👩</span>
+                          <span class="text-2xl">👩🏾‍🏫</span>
                           <span class="font-medium text-gray-800">{{ association.personne2 }}</span>
                         </div>
                       </td>
